@@ -1,0 +1,18 @@
+{
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "rewrites": [
+        {
+            "source": "/api/(.*)",
+            "destination": "http://localhost:8000/api/$1"
+        },
+        {
+            "source": "/media/(.*)",
+            "destination": "http://localhost:8000/media/$1"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
+}
