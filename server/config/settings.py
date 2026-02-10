@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-in_j-in$n4fqzljda5=qnh5o+@=56g8n07!#@19d9q_1-)#okw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', '.vercel.app']
 
 
 # Application definition
@@ -127,7 +127,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # CORS
 CORS_ALLOW_ALL_ORIGINS = True # For development
 
-CSRF_TRUSTED_ORIGINS = ['https://10.10.6.148:5173']
+CSRF_TRUSTED_ORIGINS = ['https://10.10.6.148:5173', 'https://dtr-pq9buezeo-aaron-basas-projects.vercel.app']
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

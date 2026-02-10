@@ -1,18 +1,42 @@
 {
-    "buildCommand": "cd client && npm install && npm run build",
-    "outputDirectory": "client/dist",
-    "rewrites": [
+    "builds": [
         {
-            "source": "/api/(.*)",
-            "destination": "http://localhost:8000/api/$1"
+            "src": "server/config/wsgi.py",
+            "use": "@vercel/python",
+            "config": {
+                "maxLambdaSize": "15mb",
+                "runtime": "python3.9"
+            }
         },
         {
-            "source": "/media/(.*)",
-            "destination": "http://localhost:8000/media/$1"
-        },
-        {
-            "source": "/(.*)",
-            "destination": "/index.html"
+            "src": "package.json",
+            "use": "@vercel/static-build"
         }
-    ]
+    ],
+    "routes": [
+        {
+            "src": "/static/(.*)",
+            "dest": "/server/static/$1"
+        },
+        {
+            "src": "/api/(.*)",
+            "dest": "/server/config/wsgi.py"
+        },
+        {
+            "src": "/media/(.*)",
+            "dest": "/server/media/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/client/dist/$1"
+        },
+        {
+            "handle": "filesystem"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/client/dist/index.html"
+        }
+    ],
+    "outputDirectory": "client/dist"
 }
