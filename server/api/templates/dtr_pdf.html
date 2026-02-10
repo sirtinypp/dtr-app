@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        @page {
+            size: letter portrait;
+            margin: 1.2cm 1.8cm;
+        }
+
+        body {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 10px;
+            color: #1a1a1a;
+            margin: 0;
+            padding: 0;
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin: 0 0 1px 0;
+        }
+
+        .form-subtitle {
+            text-align: center;
+            font-size: 8px;
+            color: #777;
+            margin-bottom: 8px;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1.5px solid #6b7b8d;
+            margin: 6px 0;
+        }
+
+        .divider-thin {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 3px 0;
+        }
+
+        .info-section {
+            width: 100%;
+            margin-bottom: 6px;
+        }
+
+        .info-section td {
+            padding: 2px 6px;
+            font-size: 10px;
+        }
+
+        .info-label {
+            color: #888;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            font-weight: bold;
+            font-size: 11px;
+            color: #2d3436;
+        }
+
+        .period-banner {
+            background-color: #6b7b8d;
+            color: #ffffff;
+            text-align: center;
+            padding: 4px 0;
+            font-size: 9px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 0;
+        }
+
+        table.dtr {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 0;
+        }
+
+        table.dtr th {
+            background-color: #6b7b8d;
+            color: #ffffff;
+            font-size: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            padding: 3px 3px;
+            border: 1px solid #5a6a7a;
+            text-align: center;
+        }
+
+        table.dtr td {
+            border: 1px solid #ccc;
+            padding: 2px 3px;
+            text-align: center;
+            font-size: 9px;
+            color: #2d3436;
+        }
+
+        .day-col {
+            font-weight: bold;
+            width: 28px;
+        }
+
+        .time-cell {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 9px;
+        }
+
+        .setup-badge {
+            font-size: 7px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .bottom-section {
+            position: fixed;
+            bottom: 0;
+            left: 1.8cm;
+            right: 1.8cm;
+        }
+
+        .signatures {
+            width: 100%;
+        }
+
+        .signatures td {
+            vertical-align: top;
+            padding: 6px 10px;
+            font-size: 9px;
+            line-height: 1.4;
+        }
+
+        .cert-text {
+            font-size: 8px;
+            color: #555;
+            line-height: 1.5;
+            text-align: justify;
+            font-style: italic;
+        }
+
+        .sig-line {
+            border-top: 1.5px solid #6b7b8d;
+            width: 85%;
+            margin: 0 auto;
+            margin-top: 25px;
+        }
+
+        .sig-name {
+            font-weight: bold;
+            font-size: 11px;
+            color: #2d3436;
+            text-align: center;
+            margin-top: 3px;
+        }
+
+        .sig-position {
+            font-size: 8px;
+            color: #888;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .sig-label {
+            font-size: 8px;
+            color: #888;
+            text-align: center;
+            margin-top: 1px;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 7px;
+            color: #aaa;
+            margin-top: 8px;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-title">DAILY TIME RECORD</div>
+    <div class="form-subtitle">Civil Service Form No. 48</div>
+    <hr class="divider">
+    <table class="info-section">
+        <tr>
+            <td width="50%">
+                <span class="info-label">Name</span><br>
+                <span class="info-value">{{ user.get_full_name|default:user.username }}</span>
+            </td>
+            <td width="50%">
+                <span class="info-label">Office / Unit</span><br>
+                <span class="info-value">{{ user.profile.office.name|default:"-" }}</span>
+            </td>
+        </tr>
+    </table>
+    <hr class="divider-thin">
+    <div class="period-banner">PERIOD: {{ period }}</div>
+    <table class="dtr">
+        <thead>
+            <tr>
+                <th rowspan="2" style="width:28px;">Day</th>
+                <th colspan="2">A.M.</th>
+                <th colspan="2">P.M.</th>
+                <th rowspan="2" style="width:50px;">Setup</th>
+            </tr>
+            <tr>
+                <th>In</th>
+                <th>Out</th>
+                <th>In</th>
+                <th>Out</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for day in days %}
+            <tr>
+                <td class="day-col">{{ day.day }}</td>
+                <td class="time-cell">{{ day.am_in|default:"-" }}</td>
+                <td class="time-cell">{{ day.am_out|default:"-" }}</td>
+                <td class="time-cell">{{ day.pm_in|default:"-" }}</td>
+                <td class="time-cell">{{ day.pm_out|default:"-" }}</td>
+                <td><span class="setup-badge">{{ day.setup|default:"-" }}</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="bottom-section">
+        <table class="signatures">
+            <tr>
+                <td width="50%" style="vertical-align: bottom; padding-bottom: 20px;">
+                    <div class="cert-text">
+                        I certify on my honor that the above is a true and correct
+                        report of the hours of work performed, record of which was
+                        made daily at the time of arrival at and departure from office.
+                    </div>
+                </td>
+                <td width="50%" style="vertical-align: bottom; padding-bottom: 20px;">
+                    <div class="cert-text">
+                        Verified as to the prescribed office hours.
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%" style="vertical-align: top;">
+                    <div class="sig-line"></div>
+                    <div class="sig-name">{{ user.get_full_name|default:user.username }}</div>
+                    <div class="sig-label">Signature of Employee</div>
+                </td>
+                <td width="50%" style="vertical-align: top;">
+                    <div class="sig-line"></div>
+                    <div class="sig-name">{{ signatory.name }}</div>
+                    <div class="sig-position">{{ signatory.position }}</div>
+                </td>
+            </tr>
+        </table>
+        <div class="footer-note">
+            System-generated by OVPA Daily Time Tracker
+        </div>
+    </div>
+</body>
+
+</html>
