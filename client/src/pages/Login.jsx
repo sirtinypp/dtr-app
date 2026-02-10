@@ -113,6 +113,7 @@ export default function Login() {
                 <div className="text-center mt-6 text-primary-100 text-sm">
                     <p>University of the Philippines System</p>
                     <p className="text-xs mt-1 opacity-75">Office of the Vice President for Administration</p>
+                    <p className="text-[10px] mt-4 opacity-50 font-mono">created by acbasa</p>
                 </div>
             </div>
         </div>
