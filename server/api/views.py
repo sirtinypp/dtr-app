@@ -175,12 +175,16 @@ class TimeLogViewSet(viewsets.ModelViewSet):
                 
                 # Let's just fill AM In and PM Out with the day's total range.
                 if first_log.time_in:
-                    day_info['am_in'] = first_log.time_in.strftime('%H:%M')
+                    # Convert to local time
+                    local_in = timezone.localtime(first_log.time_in)
+                    day_info['am_in'] = local_in.strftime('%H:%M')
                 
                 # If there's a break? 
                 # Let's just put the OUT time of the last log in PM Out.
                 if last_log.time_out:
-                    day_info['pm_out'] = last_log.time_out.strftime('%H:%M')
+                    # Convert to local time
+                    local_out = timezone.localtime(last_log.time_out)
+                    day_info['pm_out'] = local_out.strftime('%H:%M')
                     
             days_data.append(day_info)
             current += timedelta(days=1)
